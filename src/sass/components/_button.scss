@@ -1,0 +1,14 @@
+.button{
+  padding: 0.2rem;
+  border: 1px solid var(--color-black);
+  color: var(--color-black);
+  background-color: rgb(246, 246, 246);
+  font-size: 1rem;
+  border-radius: 2px;
+  transition: 100ms;
+  cursor: pointer;
+  &:hover{
+    color: rgb(246, 246, 246);
+    background-color: var(--color-black);
+  }
+}
