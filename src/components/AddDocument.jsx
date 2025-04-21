@@ -21,7 +21,6 @@ export default function AddDocument({
         const data = await fetchData();
         const updatedElement = data.find(el => el.id === element.id);
         setElement(updatedElement);
-        console.log(updatedElement)
       }
     } catch (err) {
       console.error(err.message);

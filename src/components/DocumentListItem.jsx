@@ -13,8 +13,7 @@ function DocumentListItem({innerDocument, document, setDocument, setElement, dat
   const [loading, setLoading] = useState(false);
   const reselectElement = async () => {
     try {
-      const savedElement = await getCollectionDocument("cars", element?.id);
-      console.log(savedElement, element?.id);
+      const savedElement = await getCollectionDocument(database, element?.id);
       await setElement({});
       setTimeout(() => setElement(savedElement), 0);
     } catch (error) {

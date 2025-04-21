@@ -4,14 +4,15 @@ import DocumentList from "../components/DocumentList";
 import ElementList from "../components/ElementList";
 import AddElement from "../components/AddElement";
 import AddDocument from "../components/AddDocument";
+import Document from "../components/document/Document";
 
 import { useState, useEffect } from "react";
 import { getCollectionDocuments } from "../scripts/getData";
 
 export default function Console() {
   const [database, setDatabase] = useState("cars");
-  const [element, setElement] = useState("");
-  const [document, setDocument] = useState("");
+  const [element, setElement] = useState({});
+  const [document, setDocument] = useState({});
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -44,7 +45,7 @@ export default function Console() {
   return (
     <div className="console">
       <Database
-        name="Cars"
+        name={database}
         databaseElements={
           <>
             <ElementList
@@ -65,7 +66,7 @@ export default function Console() {
         }
       />
       <Database
-        name="Documents"
+        name="documents"
         databaseElements={
           <>
             <DocumentList
@@ -89,7 +90,12 @@ export default function Console() {
           </>
         }
       />
-      <Display path={[database, element.id, document.id]} />
+      <div>
+        <Display path={[database, element.id, document.id]} />
+          {document && 
+            <Document document={document} />
+          }
+      </div>
     </div>
   );
 }
