@@ -1,9 +1,9 @@
-import { editCollectionId } from "../scripts/updateData";
-import { deleteCollectionData } from "../scripts/deleteData";
+import { updateCollectionDocumentId } from "../scripts/updateData";
+import { deleteCollectionDocument } from "../scripts/deleteData";
 import { useState } from "react";
 import Input from "./Input";
-import { isCollectionIdAvailable } from "../scripts/firebaseUtility";
-import { getCollectionElement } from "../scripts/getData";
+import { isCollectionDocumentIdAvailable } from "../scripts/firebaseUtility";
+import { getCollectionDocument } from "../scripts/getData";
 
 export function ElementListItem({
   database,
@@ -12,14 +12,14 @@ export function ElementListItem({
   setDocument,
   setElement,
   fetchData,
-}) {
+}) {  
+  let classes = "database__item";
+  if (element.id === innerElement.id) classes += " database__item--selected";
+  
   const [editing, setEditing] = useState(false);
   const [blurExit, setBlurExit] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  let classes = "database__item";
-  if (element.id === innerElement.id) classes += " database__item--selected";
-
+  
   const editElement = async (newId) => {
     try {
       setLoading(true);
@@ -27,15 +27,15 @@ export function ElementListItem({
       setBlurExit(true);
       setTimeout(() => setBlurExit(false), 400);
       if (innerElement.id === newId) return;
-
-      const available = await isCollectionIdAvailable(database, newId);
+      const available = await isCollectionDocumentIdAvailable(database, newId);
       if (!available) {
         alert(`Numele "${newId}" este luat!`);
       } else {
-        await editCollectionId(database, innerElement.id, newId);
+        await updateCollectionDocumentId(database, innerElement.id, newId);
         await fetchData();
+        
         if (element.id === innerElement.id) {
-          setElement(await getCollectionElement(database, newId));
+          setElement(await getCollectionDocument(database, newId));
         }
       }
     } catch (err) {
@@ -51,7 +51,7 @@ export function ElementListItem({
     ) {
       try {
         setLoading(true);
-        deleteCollectionData(database, innerElement.id);
+        deleteCollectionDocument(database, innerElement.id);
         await fetchData();
         if(element.id === innerElement.id){
           setElement("");
@@ -71,7 +71,7 @@ export function ElementListItem({
   };
 
   return (
-    <li className={classes} onClick={() => handleElementClick(innerElement)}>
+    <li key={innerElement.id} className={classes} onClick={() => handleElementClick(innerElement)}>
       {editing ? (
         <Input
           className="input margin-bottom-05"
@@ -89,6 +89,7 @@ export function ElementListItem({
         <button
           className="button"
           onClick={(event) => {
+            if (loading) return;
             event.stopPropagation();
             if (blurExit) setBlurExit(false);
             else setEditing(true);

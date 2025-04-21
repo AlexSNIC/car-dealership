@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # keys
-firebaseConfig.tsx
+keys.js

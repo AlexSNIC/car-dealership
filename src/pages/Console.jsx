@@ -6,7 +6,7 @@ import AddElement from "../components/AddElement";
 import AddDocument from "../components/AddDocument";
 
 import { useState, useEffect } from "react";
-import { getCollectionData } from "../scripts/getData";
+import { getCollectionDocuments } from "../scripts/getData";
 
 export default function Console() {
   const [database, setDatabase] = useState("cars");
@@ -15,16 +15,16 @@ export default function Console() {
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [error, setError] = useState(null);
   const fetchData = async () => {
     try {
-      const items = await getCollectionData(database);
-      console.log(items);
-      setData(items.sort((a, b) => a.id.localeCompare(b.id)));
+      const items = await getCollectionDocuments(database);
+      setData([...items.sort((a, b) => a.id.localeCompare(b.id))]);
       setLoading(false);
       return items;
     } catch (error) {
       console.error("Error fetching data: ", error);
+      setError(error);
       setLoading(false);
     }
   };
@@ -34,7 +34,13 @@ export default function Console() {
   }, []);
 
   if (loading) return <h2 className="absolute-center">Se încarcă...</h2>;
-  if (!data) return <h2 className="absolute-center">A apărut o eroare: </h2>;
+  if (error) {
+    return (
+      <h2 className="absolute-center">
+        {error}
+      </h2>
+    );
+  }
   return (
     <div className="console">
       <Database
@@ -68,6 +74,7 @@ export default function Console() {
               documents={element.documents}
               document={document}
               setDocument={setDocument}
+              setElement={setElement}
               fetchData={fetchData}
             />
             {element && (

@@ -1,9 +1,9 @@
 import { doc, getDoc, setDoc, deleteDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase";
 
-export const editCollectionId = async (collectionName, elementId, newId) => {
+export const updateCollectionDocumentId = async (collectionName, documentId, newId) => {
   try {
-    const oldDocRef = doc(db, collectionName, elementId);
+    const oldDocRef = doc(db, collectionName, documentId);
     const newDocRef = doc(db, collectionName, newId);
 
     const docSnap = await getDoc(oldDocRef);
@@ -17,24 +17,37 @@ export const editCollectionId = async (collectionName, elementId, newId) => {
 
     await deleteDoc(oldDocRef);
 
-    console.log(`Document ID changed from ${elementId} to ${newId}`);
+    console.log(`Document ID changed from ${documentId} to ${newId}`);
     return newDocRef;
   } catch (error) {
     console.error("Error changing document ID:", error);
   }
 };
 
-export const addDocumentToCollection = async (collection, id, newDocument) => {
+export const updateCollectionDocumentElementId = async (collectionName, documentId, elementId, newId) => {
   try {
+    const docRef = doc(db, collectionName, documentId);
+    const docSnap = await getDoc(docRef);
 
-    const docRef = doc(db, collection, id);
+    if (!docSnap.exists()) {
+      throw new Error("Document not found");
+    }
 
-    await updateDoc(docRef, {
-      documents: arrayUnion(newDocument), 
+    const data = docSnap.data();
+    const documentsArray = data.documents || [];
+
+    const updatedDocuments = documentsArray.map(doc => {
+      if (doc.id === elementId) {
+        return { ...doc, id: newId };
+      }
+      return doc;
     });
 
-    console.log("New document with id " + newDocument.id + " added to the collection successfully!");
+    await updateDoc(docRef, {
+      documents: updatedDocuments
+    });
   } catch (error) {
-    console.error("Error adding document " + newDocument.id +" to collection: ", error);
+    console.error("Error updating document element ID:", error);
   }
 };
+

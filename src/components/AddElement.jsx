@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { addCollectionData } from "../scripts/addData";
+import { addCollectionDocument } from "../scripts/addData";
 import ClickInput from "./ClickInput";
-import { isCollectionIdAvailable } from "../scripts/firebaseUtility";
+import { isCollectionDocumentIdAvailable } from "../scripts/firebaseUtility";
 export default function AddElement({
   setDocument,
   setElement,
@@ -10,9 +10,9 @@ export default function AddElement({
 }) {
   const handleAddElement = async (id) => {
     try {
-      const isAvailable = await isCollectionIdAvailable(collectionName, id);
+      const isAvailable = await isCollectionDocumentIdAvailable(collectionName, id);
       if (isAvailable) {
-        await addCollectionData(collectionName, id);
+        await addCollectionDocument(collectionName, id);
         await fetchData();
         setDocument("");
         setElement({ id, documents: []});

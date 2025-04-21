@@ -1,6 +1,6 @@
 import ClickInput from "./ClickInput";
-import { isDocumentIdAvailable } from "../scripts/firebaseUtility";
-import { addDocumentToCollection } from "../scripts/updateData";
+import { isCollectionDocumentElementIdAvailable } from "../scripts/firebaseUtility";
+import { addCollectionDocumentElement } from "../scripts/addData";
 
 export default function AddDocument({
   collectionName,
@@ -11,13 +11,13 @@ export default function AddDocument({
 }) {
   const handleAddDocument = async (id) => {
     try {
-      const isAvailable = await isDocumentIdAvailable(collectionName, element.id, id);
+      const isAvailable = await isCollectionDocumentElementIdAvailable(collectionName, element.id, id);
       if(!isAvailable){
         alert(`Numele "${id}"este luat!`);
       }
       else{
         const newDoc = {id};
-        await addDocumentToCollection(collectionName, element.id, newDoc);
+        await addCollectionDocumentElement(collectionName, element.id, newDoc);
         const data = await fetchData();
         const updatedElement = data.find(el => el.id === element.id);
         setElement(updatedElement);
