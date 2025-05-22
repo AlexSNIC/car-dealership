@@ -1,9 +1,14 @@
-import React from 'react'
+const DateComponent = ({ name, value, email }) => {
+  const formattedDate = value && value.seconds
+    ? new Date(value.seconds * 1000).toLocaleDateString().replaceAll("/", ".") : "Invalid Date";
 
-const Date = () => {
   return (
-    <div>Date</div>
-  )
-}
+    <div className="field">
+      <span className="field__name">{name}: </span>
+      <span className="field__value">{formattedDate}</span>
+      <button className="button field__button"><i className="bi bi-pencil-square"></i></button>
+    </div>
+  );
+};
 
-export default Date
+export default DateComponent;

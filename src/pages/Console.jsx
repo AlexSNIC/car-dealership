@@ -92,7 +92,7 @@ export default function Console() {
       />
       <div>
         <Display path={[database, element.id, document.id]} />
-          {document && 
+          {document && document?.id && 
             <Document document={document} />
           }
       </div>

@@ -52,6 +52,16 @@
   margin-bottom: 0.5rem;
 }
 
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
 .console {
   display: grid;
   grid-template-columns: 1fr 1fr 3fr;
@@ -120,6 +130,136 @@
 .button:hover {
   color: rgb(246, 246, 246);
   background-color: var(--color-black);
+}
+
+.document {
+  padding: 0.4rem 1rem;
+}
+
+.field {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+}
+.field__button {
+  margin-left: 1rem;
+  text-align: center;
+}
+.field__button--add {
+  width: 12rem;
+}
+.field__name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.field-dialog__content {
+  padding: 0.5rem;
+  background-color: #f9f9f9;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.field-dialog__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.field-dialog__form {
+  display: flex;
+  flex-direction: column;
+}
+.field-dialog__label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.field-dialog__input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+.field-dialog__select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+.field-dialog__textarea {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  resize: none;
+  font-family: sans-serif;
+  overflow: auto;
+}
+.field-dialog__button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.field-dialog__button:hover {
+  background-color: #0056b3;
+}
+
+.dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.dialog__box {
+  background-color: #fff;
+  border-radius: 8px;
+  width: clamp(25rem, 60%, 40rem);
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1001;
+}
+.dialog__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+.dialog__header-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+}
+.dialog__header-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  margin-bottom: -0.25rem;
+  cursor: pointer;
+  color: #333;
+  user-select: none;
+  -moz-user-select: none;
+}
+.dialog__header-close:hover {
+  color: #000;
+}
+.dialog__content {
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: #333;
 }
 
 /*# sourceMappingURL=index.css.map */
